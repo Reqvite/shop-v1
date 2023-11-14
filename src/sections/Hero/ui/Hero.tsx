@@ -70,6 +70,7 @@ export const Hero = ({ data }: HeroProps) => {
               {title}
             </MotionHeading>
             <MotionText
+              color={"var(--chakra-colors-mainColorDark)"}
               custom={2}
               variants={animation}
               fontSize={{ md: "2xl" }}

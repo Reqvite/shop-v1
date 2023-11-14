@@ -37,15 +37,18 @@ export const Navbar = memo((props: NavbarProps) => {
   const path = usePathname();
   const { isOpen, onToggle } = useDisclosure();
 
+  const isMainPage = path.split("/").length === 2;
+  const themeBg = useColorModeValue(
+    "var(--chakra-colors-secondaryBgColorLight)",
+    "var(--chakra-colors-secondaryBgColorDark)",
+  );
+
   return (
     <MotionBox
       as="header"
       background={{
-        base: useColorModeValue(
-          "var(--chakra-colors-mainBgColorLight)",
-          "var(--chakra-colors-mainBgColorDark)",
-        ),
-        md: "transparent",
+        base: themeBg,
+        md: isMainPage ? "transparent" : themeBg,
       }}
       position={"absolute"}
       zIndex={"var(--chakra-zIndices-navbar)"}
@@ -89,7 +92,7 @@ export const Navbar = memo((props: NavbarProps) => {
         <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
           <Logo logoText={logoText} logoUrl={logoUrl} lang={lang} />
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
-            <DesktopNav links={links} />
+            <DesktopNav isMainPage={isMainPage} links={links} />
           </Flex>
         </Flex>
         {buttons && (

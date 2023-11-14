@@ -17,10 +17,17 @@ import type { NavLink, SubLink } from "@/shared/types/components";
 
 type DesktopNavProps = {
   links: NavLink[];
+  isMainPage: boolean;
 };
-export const DesktopNav = ({ links }: DesktopNavProps) => {
-  const linkColor = useColorModeValue("gray.600", "gray.200");
-  const popoverContentBgColor = useColorModeValue("white", "gray.800");
+export const DesktopNav = ({ links, isMainPage }: DesktopNavProps) => {
+  const linkColor = useColorModeValue(
+    "var(--chakra-colors-mainColorLight)",
+    "var(--chakra-colors-mainColorDark)",
+  );
+  const popoverContentBgColor = useColorModeValue(
+    "var(--chakra-colors-mainBgColorLight)",
+    "var(--chakra-colors-mainBgColorDark)",
+  );
   return (
     <Stack direction={"row"} spacing={4}>
       {links.map((navItem) => (
@@ -33,7 +40,9 @@ export const DesktopNav = ({ links }: DesktopNavProps) => {
                 href={navItem.href ?? "#"}
                 fontSize={"sm"}
                 fontWeight={500}
-                color={"white"}
+                color={
+                  isMainPage ? "--chakra-colors-mainColorLight" : linkColor
+                }
                 _hover={{
                   textDecoration: "none",
                   color: "var(--chakra-colors-accentColor)",
@@ -76,10 +85,7 @@ const DesktopSubNav = ({ label, href, subLabel }: SubLink) => {
       p={2}
       rounded={"md"}
       _hover={{
-        bg: useColorModeValue(
-          "var(--chakra-colors-accentColorTransparent)",
-          "gray.900",
-        ),
+        bg: "var(--chakra-colors-accentColorTransparent)",
       }}
     >
       <Stack direction={"row"} align={"center"}>

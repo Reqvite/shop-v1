@@ -4,9 +4,10 @@ import ChakraProvider from "./CkakraProvider";
 
 interface AppRpovidersProps {
   children: ReactNode;
+  cookies: "light" | "dark";
 }
-function AppRpoviders({ children }: AppRpovidersProps) {
-  return <ChakraProvider>{children}</ChakraProvider>;
+function AppRpoviders({ children, cookies }: AppRpovidersProps) {
+  return <ChakraProvider colorMode={cookies}>{children}</ChakraProvider>;
 }
 
 export default AppRpoviders;

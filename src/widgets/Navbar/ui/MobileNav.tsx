@@ -19,12 +19,12 @@ type MobileNavProps = {
 export const MobileNav = ({ links }: MobileNavProps) => {
   return (
     <Stack
-      bg={useColorModeValue(
-        "var(--chakra-colors-mainBgColorLight)",
-        "var(--chakra-colors-mainBgColorDark)",
-      )}
       p={4}
       display={{ md: "none" }}
+      bg={useColorModeValue(
+        "var(--chakra-colors-secondaryBgColorLight)",
+        "var(--chakra-colors-secondaryBgColorDark)",
+      )}
     >
       {links.map((navItem) => (
         <MobileNavItem key={navItem.label} {...navItem} />

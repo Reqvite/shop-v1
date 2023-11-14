@@ -12,41 +12,50 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import { motion } from "framer-motion";
+import { forwardRef } from "react";
 import { FaChevronRight } from "react-icons/fa";
 
-import { Category } from "./_data";
+import { getStrapiMedia } from "@/shared/api/api-helpers";
+import { Category } from "@/shared/types/components";
 
 interface Props {
   category: Category;
   rootProps?: BoxProps;
 }
 
-export const CategoryCard = (props: Props) => {
+const MBox = motion(Box);
+const MLink = motion(Link);
+
+const CategoryCard = (props: Props) => {
   const { category, rootProps } = props;
+  const { title, slug, description, img, linkTitle } = category;
+  const categoryImg = getStrapiMedia(img.data.attributes.url);
   return (
-    <Box
+    <MBox
+      h={"full"}
       position="relative"
-      key={category.name}
+      key={title}
       borderRadius="xl"
       overflow="hidden"
       minH={{ base: "sm", lg: "auto" }}
       transitionDuration="500ms"
-      _hover={{ transform: "scale(1.05)" }}
+      whileHover={{ scale: 1.01 }}
+      whileFocus={{ scale: 1.01 }}
+      whileTap={{ scale: 0.99 }}
       {...rootProps}
     >
-      <Link>
+      <MLink href={`/categories/${slug}`}>
         <Image
-          _hover={{ transform: "scale(1.1)" }}
-          src={category.imageUrl}
+          src={categoryImg || ""}
           height="full"
           objectFit="cover"
-          alt={category.name}
-          fallback={<Skeleton />}
+          alt={title}
         />
         <Box
           position="absolute"
           inset="0"
-          bg="linear-gradient(180deg, rgba(0, 0, 0, 0) 47.92%, #000000 100%)"
+          bg="linear-gradient(180deg, var(--chakra-colors-accentColorTransparentDarker) 47.92%, var(--chakra-colors-accentColorTransparent) 100%)"
           boxSize="full"
         />
         <Flex
@@ -58,24 +67,24 @@ export const CategoryCard = (props: Props) => {
           px={{ base: "4", md: "8" }}
           py={{ base: "6", md: "8", lg: "10" }}
         >
-          <Stack spacing="5">
+          <Stack spacing="5" color={"var(--chakra-colors-mainColorDark)"}>
             <Stack spacing="1">
               <Heading fontSize="2xl" fontWeight="extrabold">
-                {category.name}
+                {title}
               </Heading>
               <Text fontSize="lg" fontWeight="medium">
-                {category.description}
+                {description}
               </Text>
             </Stack>
             <HStack>
-              <Link fontSize="lg" fontWeight="bold" textDecoration="underline">
-                Shop now
-              </Link>
+              <Text textDecoration={"underline"}>{linkTitle}</Text>
               <Icon as={FaChevronRight} />
             </HStack>
           </Stack>
         </Flex>
-      </Link>
-    </Box>
+      </MLink>
+    </MBox>
   );
 };
+
+export const MCategoryCard = motion(CategoryCard);

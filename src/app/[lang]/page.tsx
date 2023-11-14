@@ -10,7 +10,7 @@ const urlParamsObject = [
   "contentSections.image",
   "contentSections.inputSubscribe",
   "contentSections.subscribeButton",
-  "contentSections.categories",
+  "contentSections.categories.img",
 ];
 
 export default async function Home({ params }: any) {

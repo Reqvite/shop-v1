@@ -41,3 +41,11 @@ export interface CheckboxType {
   href: string;
   hrefText: string;
 }
+
+export interface Category {
+  title: string;
+  linkTitle: string;
+  description: string;
+  slug: string;
+  img: any;
+}

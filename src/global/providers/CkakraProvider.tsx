@@ -2,13 +2,16 @@
 import { ChakraProvider as Chakra } from "@chakra-ui/react";
 import { ReactNode } from "react";
 
-import { theme } from "../styles/theme";
+import { getTheme } from "../styles/theme";
 
 interface ChakraProviderProps {
   children: ReactNode;
+  colorMode: "light" | "dark";
 }
-function ChakraProvider({ children }: ChakraProviderProps) {
+export default function ChakraProvider({
+  children,
+  colorMode,
+}: ChakraProviderProps) {
+  const theme = getTheme(colorMode);
   return <Chakra theme={theme}>{children}</Chakra>;
 }
-
-export default ChakraProvider;

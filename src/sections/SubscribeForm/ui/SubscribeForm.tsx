@@ -64,9 +64,10 @@ export const SubscribeForm = ({ data }: SubscribeFormProps) => {
             <Text
               as={"p"}
               fontSize={{ base: "3xl" }}
-              bgGradient="linear(to-r, red.400,var(--chakra-colors-accentColor)
-              )"
-              bgClip="text"
+              color={useColorModeValue(
+                "var(--chakra-colors-mainBgColorDark)",
+                "var(--chakra-colors-mainBgColorLight)",
+              )}
             >
               {description}
             </Text>
@@ -101,7 +102,6 @@ export const SubscribeForm = ({ data }: SubscribeFormProps) => {
                   _placeholder={{
                     color: "gray.400",
                   }}
-                  borderColor={useColorModeValue("gray.300", "gray.700")}
                   id={"email"}
                   //@ts-ignore
                   required
@@ -126,13 +126,12 @@ export const SubscribeForm = ({ data }: SubscribeFormProps) => {
               </FormControl>
             </Stack>
             <Text
+              color={useColorModeValue(
+                "var(--chakra-colors-mainBgColorDark)",
+                "var(--chakra-colors-mainBgColorLight)",
+              )}
               mt={2}
               textAlign={"center"}
-              color={
-                error
-                  ? "var(--chakra-colors-errorColorLight)"
-                  : "var(--chakra-colors-mainColorDark)"
-              }
             >
               {error
                 ? "Oh no an error occured! 😢 Please try again later."

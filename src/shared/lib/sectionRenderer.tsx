@@ -1,5 +1,6 @@
 import { Categories } from "@/sections/Categories";
 import { Hero } from "@/sections/Hero";
+import { ProductsList } from "@/sections/ProductsList";
 import { SubscribeForm } from "@/sections/SubscribeForm";
 
 export function sectionRenderer(section: any, index: number) {
@@ -12,7 +13,11 @@ export function sectionRenderer(section: any, index: number) {
       return <Categories key={index} data={section} />;
     case "blocks.subscribe-form":
       return <SubscribeForm key={index} data={section} />;
+    // case "blocks.subscribe-form":
+    //   return <ProductsList key={index} data={section} />;
     default:
       return null;
   }
 }
+
+ProductsList;

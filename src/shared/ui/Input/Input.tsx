@@ -1,3 +1,4 @@
+"use client";
 import {
   FormControl,
   FormErrorMessage,
@@ -5,6 +6,7 @@ import {
   FormLabel,
   Input as ChakraInput,
   InputProps as ChakraInputProps,
+  useColorModeValue,
 } from "@chakra-ui/react";
 
 type InputProps = ChakraInputProps & {
@@ -22,7 +24,10 @@ export const Input = (props: InputProps) => {
         {...otherProps}
         _hover={{ borderColor: "var(--chakra-colors-accentColor)" }}
         _focus={{ borderColor: "var(--chakra-colors-accentColor)" }}
-        borderColor={"var(--chakra-colors-mainColorDark)"}
+        borderColor={useColorModeValue(
+          "var(--chakra-colors-mainBgColorDark)",
+          "var(--chakra-colors-mainBgColorLight)",
+        )}
       />
       <FormLabel>{label}</FormLabel>
       {helperText && <FormHelperText>{helperText}</FormHelperText>}

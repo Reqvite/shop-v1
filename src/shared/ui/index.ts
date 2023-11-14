@@ -1,2 +1,10 @@
+export { Carousel } from "./Carousel/Carousel";
+export { ColorPicker } from "./ColorPicker/ColorPicker";
+export { Gallery } from "./Gallery/Gallery";
 export { Input } from "./Input/Input";
 export { Logo } from "./Logo/Logo";
+export { PriceTag } from "./PriceTag/PriceTag";
+export { ProductBadge } from "./ProductBadge/ProductBadge";
+export { QuantityPicker } from "./QuantityPicker/QuantityPicker";
+export { Rating } from "./Rating/Rating";
+export { SizePicker } from "./SizePicker/SizePicker";

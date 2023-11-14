@@ -1,6 +1,7 @@
 import { Box, Flex } from "@chakra-ui/react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { ReactNode } from "react";
 
@@ -9,6 +10,7 @@ import AppProviders from "@/global/providers/AppProviders";
 import { Footer } from "@/sections/Footer";
 import { getStrapiMedia, getStrapiURL } from "@/shared/api/api-helpers";
 import { fetchAPI } from "@/shared/api/fetch-api";
+import { i18n } from "@/shared/config/i18n/i18n";
 import { FALLBACK_SEO } from "@/shared/const/fallbackSeo";
 import { PageParams } from "@/shared/types/pageParams";
 import { Navbar } from "@/widgets/Navbar";
@@ -82,10 +84,14 @@ export default async function RootLayout({
 }: RootLayoutProps) {
   const global = await getGlobal(params.lang);
   if (!global.data) return <ServerError />;
+  const cookieStore = cookies();
+  const defaultTheme = "dark";
+  const uiColorMode =
+    (cookieStore.get("chakra-ui-color-mode")?.value as "light" | "dark") ||
+    defaultTheme;
 
   const { notificationBanner, navbar, footer } = global.data.attributes;
   if (!navbar || !footer) return redirect("/");
-
   const navbarLogoUrl = getStrapiMedia(
     navbar?.navbarLogo?.logoImg.data.attributes.url,
   );
@@ -94,9 +100,13 @@ export default async function RootLayout({
   );
 
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <AppProviders>
+    <html
+      lang="en"
+      data-theme={uiColorMode}
+      style={{ colorScheme: uiColorMode }}
+    >
+      <body className={`${inter.className} chakra-ui-${uiColorMode}`}>
+        <AppProviders cookies={uiColorMode}>
           <Flex
             flexDirection={"column"}
             justifyContent={"space-between"}
@@ -123,4 +133,8 @@ export default async function RootLayout({
       </body>
     </html>
   );
+}
+
+export async function generateStaticParams() {
+  return i18n.locales.map((locale) => ({ lang: locale }));
 }

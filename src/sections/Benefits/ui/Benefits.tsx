@@ -21,12 +21,12 @@ function StatsCard(props: StatsCardProps) {
   return (
     <Stat
       as="li"
-      color={"white"}
+      color={"var(--chakra-colors-mainColorDark)"}
       px={{ base: 4, md: 8 }}
       py={"5"}
       shadow={"2xl"}
       boxShadow={"var(--chakra-shadows-mainShadow)"}
-      background={"whiteAlpha.300"}
+      background={"var(--chakra-colors-accentColorTransparent)"}
       rounded={"lg"}
     >
       <StatLabel
