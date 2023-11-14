@@ -31,6 +31,16 @@ async function fetchPostsByCategory(filter: string) {
         detailsButton: {
           populate: "*",
         },
+        options: {
+          populate: {
+            color: {
+              populate: "*",
+            },
+            size: {
+              populate: "*",
+            },
+          },
+        },
       },
     };
     const options = { headers: { Authorization: `Bearer ${token}` } };
@@ -50,7 +60,7 @@ export default async function CategoryRoute({
   const { data } = await fetchPostsByCategory(filter);
 
   //TODO: CREATE A COMPONENT FOR THIS
-  if (data.length === 0) return <div>No product </div>;
+  if (data.length === 0) return <div>No products</div>;
 
   return (
     <Box as="main" pt={"var(--chakra-sizes-headerHeight)"}>

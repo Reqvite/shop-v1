@@ -10,20 +10,20 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { usePathname } from "next/navigation";
 import { FiClock, FiHeart } from "react-icons/fi";
 import { RiRulerLine } from "react-icons/ri";
 
+import { getStrapiMedia } from "@/shared/api/api-helpers";
+import { productRender } from "@/shared/lib/productRender";
+import { Product } from "@/shared/types/product";
 import {
-  ColorPicker,
   Gallery,
   PriceTag,
   ProductBadge,
   QuantityPicker,
   Rating,
-  SizePicker,
 } from "@/shared/ui";
-
-import { Product } from "./_data";
 
 interface ProductQuickShopProps {
   product: Product;
@@ -32,6 +32,33 @@ interface ProductQuickShopProps {
 
 export const ProductQuickShop = (props: ProductQuickShopProps) => {
   const { product, rootProps } = props;
+  const {
+    title,
+    discount,
+    currency,
+    price,
+    rating,
+    images,
+    slug,
+    detailsButton,
+    quantity,
+    options,
+  } = product;
+
+  const pathname = usePathname();
+
+  const mapImages = images.data.map((el: any, idx: number) => {
+    return {
+      id: idx,
+      src: getStrapiMedia(el.attributes.url),
+      alt: el.attributes.alternativeText,
+    };
+  });
+
+  const sections = options.map((section: any, index: number) =>
+    productRender(section, index),
+  );
+
   return (
     <Stack
       direction={{ base: "column", xl: "row" }}
@@ -39,7 +66,7 @@ export const ProductQuickShop = (props: ProductQuickShopProps) => {
       {...rootProps}
     >
       <Box flex="1">
-        <Gallery images={product.images} />
+        <Gallery images={mapImages} />
       </Box>
       <Box flex="1">
         <Stack spacing={{ base: "4", md: "8" }}>
@@ -50,7 +77,7 @@ export const ProductQuickShop = (props: ProductQuickShopProps) => {
               </ProductBadge>
             </Stack>
             <Heading size="lg" fontWeight="medium">
-              {product.name}
+              {title}
             </Heading>
             <Stack
               direction={{ base: "column", md: "row" }}
@@ -59,15 +86,15 @@ export const ProductQuickShop = (props: ProductQuickShopProps) => {
               justify="space-between"
             >
               <PriceTag
-                price={product.price}
-                salePrice={product.salePrice}
-                currency={product.currency}
+                price={price}
+                salePrice={discount}
+                currency={currency}
                 rootProps={{ fontSize: "xl" }}
               />
               <HStack spacing="2" alignSelf="baseline">
-                <Rating defaultValue={product.rating} size="sm" />
+                <Rating defaultValue={rating} size="sm" />
                 <Link href="#" fontSize="sm" fontWeight="medium">
-                  {product.ratingCount} Reviews
+                  {rating} Reviews
                 </Link>
               </HStack>
             </Stack>
@@ -78,49 +105,22 @@ export const ProductQuickShop = (props: ProductQuickShopProps) => {
             direction={{ base: "column", md: "row" }}
           >
             <Stack flex="1">
-              <ColorPicker
-                onChange={console.log}
-                defaultValue="Black"
-                options={[
-                  { label: "Black", colorData: "#000" },
-                  { label: "Dark Gray", colorData: "#666" },
-                  { label: "Light Gray", colorData: "#BBB" },
-                ]}
-              />
+              {sections[0] && sections[0]}
               <HStack
                 spacing="1"
                 color={useColorModeValue("gray.600", "gray.400")}
               >
-                <Icon as={FiClock} />
-                <Text fontSize="xs" fontWeight="medium">
-                  Low stock
-                </Text>
+                {quantity <= 5 && (
+                  <>
+                    <Icon as={FiClock} />
+                    <Text fontSize="xs" fontWeight="medium">
+                      Low stock
+                    </Text>
+                  </>
+                )}
               </HStack>
             </Stack>
-            <Stack flex="1">
-              <SizePicker
-                defaultValue="32"
-                options={[
-                  { label: "32mm", value: "32" },
-                  { label: "36mm", value: "36" },
-                  { label: "40mm", value: "40" },
-                ]}
-              />
-              <HStack
-                spacing="1"
-                color={useColorModeValue("gray.600", "gray.400")}
-              >
-                <Icon as={RiRulerLine} />
-                <Link
-                  href="#"
-                  fontSize="xs"
-                  fontWeight="medium"
-                  textDecoration="underline"
-                >
-                  View our sizing guide
-                </Link>
-              </HStack>
-            </Stack>
+            {sections[1] && sections[1]}
           </Stack>
           <HStack
             spacing={{ base: "4", md: "8" }}
@@ -146,7 +146,9 @@ export const ProductQuickShop = (props: ProductQuickShopProps) => {
             <Button variant="primary" size="lg">
               Add to cart
             </Button>
-            <Link textAlign="center">View full details</Link>
+            <Link textAlign="center" href={`${pathname}/${slug}`}>
+              {detailsButton.label}
+            </Link>
           </Stack>
         </Stack>
       </Box>

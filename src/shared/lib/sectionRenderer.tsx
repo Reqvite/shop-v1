@@ -19,5 +19,3 @@ export function sectionRenderer(section: any, index: number) {
       return null;
   }
 }
-
-ProductsList;

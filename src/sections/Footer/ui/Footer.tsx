@@ -38,7 +38,11 @@ export const Footer = (props: Footerprops) => {
   return (
     <Box bg="bg.surface">
       <Container as="footer" role="contentinfo" maxW={"8xl"}>
-        <Divider />
+        <Divider
+          bg={"var(--chakra-colors-accentColor)"}
+          h={"2px"}
+          borderRadius={"5px"}
+        />
         <Stack
           justify="space-between"
           align="start"
@@ -80,7 +84,11 @@ export const Footer = (props: Footerprops) => {
             ))}
           </SimpleGrid>
         </Stack>
-        <Divider />
+        <Divider
+          bg={"var(--chakra-colors-accentColor)"}
+          h={"2px"}
+          borderRadius={"5px"}
+        />
         <Stack
           pt="8"
           pb="12"

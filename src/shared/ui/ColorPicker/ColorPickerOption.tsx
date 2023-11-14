@@ -1,3 +1,4 @@
+"use client";
 import {
   Box,
   chakra,
@@ -29,7 +30,6 @@ export const ColorPickerOption = (props: ColorPickerOptionProps) => {
       display={"flex"}
       _hover={{ borderColor: "green.100" }}
       color={isPicked ? "green.100" : "white"}
-      width={"100%"}
       borderRadius={10}
       tabIndex={0}
       cursor={"pointer"}
@@ -57,9 +57,6 @@ export const ColorPickerOption = (props: ColorPickerOptionProps) => {
         >
           <Circle size="8" bg={colordata} />
         </Circle>
-        <Text css={letterToUpperCase} color={"white"}>
-          {color}
-        </Text>
         <VisuallyHidden {...getLabelProps()}>
           {value} color selected
         </VisuallyHidden>

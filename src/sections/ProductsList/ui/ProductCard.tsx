@@ -86,7 +86,7 @@ export const ProductCard = (props: Props) => {
           borderRadius="md"
           padding="1.5"
         >
-          <ProductButtonGroup />
+          <ProductButtonGroup product={product} />
         </Box>
       </Box>
       <Stack spacing="1">

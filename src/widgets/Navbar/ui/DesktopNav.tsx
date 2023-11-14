@@ -41,7 +41,7 @@ export const DesktopNav = ({ links, isMainPage }: DesktopNavProps) => {
                 fontSize={"sm"}
                 fontWeight={500}
                 color={
-                  isMainPage ? "--chakra-colors-mainColorLight" : linkColor
+                  isMainPage ? "var(--chakra-colors-mainColorDark)" : linkColor
                 }
                 _hover={{
                   textDecoration: "none",

@@ -3,9 +3,14 @@ import {
   FormControlProps,
   FormLabel,
   HStack,
+  Icon,
+  Link,
+  Stack,
+  useColorModeValue,
   useRadioGroup,
   UseRadioGroupProps,
 } from "@chakra-ui/react";
+import { RiRulerLine } from "react-icons/ri";
 
 import { SizePickerButton } from "./SizePickerButton";
 
@@ -30,18 +35,31 @@ export const SizePicker = (props: SizePickerProps) => {
     <FormControl {...rootProps}>
       {!hideLabel && (
         <FormLabel fontSize="sm" fontWeight="medium">
-          {label ?? `Size: ${selectedOption?.label}`}
+          {`Size: ${selectedOption?.label || label || options[0].label}`}
         </FormLabel>
       )}
-      <HStack {...getRootProps()}>
-        {options.map((option) => (
-          <SizePickerButton
-            key={option.value}
-            label={option.label}
-            {...getRadioProps({ value: option.value })}
-          />
-        ))}
-      </HStack>
+      <Stack flex="1">
+        <HStack {...getRootProps()}>
+          {options.map((option) => (
+            <SizePickerButton
+              key={option.value}
+              label={option.label}
+              {...getRadioProps({ value: option.value })}
+            />
+          ))}
+        </HStack>
+        <HStack spacing="1" color={useColorModeValue("gray.600", "gray.400")}>
+          <Icon as={RiRulerLine} />
+          <Link
+            href="#"
+            fontSize="xs"
+            fontWeight="medium"
+            textDecoration="underline"
+          >
+            View our sizing guide
+          </Link>
+        </HStack>
+      </Stack>
     </FormControl>
   );
 };

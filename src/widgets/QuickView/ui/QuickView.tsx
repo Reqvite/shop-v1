@@ -9,13 +9,16 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 
-import { products } from "./_data";
+import { Product } from "@/shared/types/product";
+
 import { ProductQuickShop } from "./ProductQuickShop";
 
 interface QuickViewProps {
   setIsOpenQuick: () => void;
+  product: Product;
 }
-export const QuickView = ({ setIsOpenQuick }: QuickViewProps) => (
+
+export const QuickView = ({ setIsOpenQuick, product }: QuickViewProps) => (
   <Box height="100vh">
     <Modal
       isOpen={true}
@@ -30,7 +33,12 @@ export const QuickView = ({ setIsOpenQuick }: QuickViewProps) => (
         mx={{ base: "2.5", lg: "16" }}
         my={{ base: "2.5", md: "16" }}
       >
-        <ModalCloseButton top="3" right="5" size="lg" />
+        <ModalCloseButton
+          top="3"
+          right="5"
+          size="lg"
+          _hover={{ bg: "var(--chakra-colors-accentColor)" }}
+        />
         <ModalBody
           bg={useColorModeValue(
             "var(--chakra-colors-secondaryBgColorLight)",
@@ -44,7 +52,7 @@ export const QuickView = ({ setIsOpenQuick }: QuickViewProps) => (
           pt="16"
           pb={{ base: "10", lg: "16" }}
         >
-          <ProductQuickShop product={products[0]} />
+          <ProductQuickShop product={product} />
         </ModalBody>
       </ModalContent>
     </Modal>

@@ -8,6 +8,7 @@ import {
 import { useState } from "react";
 import { FiEye, FiHeart, FiShoppingCart } from "react-icons/fi";
 
+import { Product } from "@/shared/types/product";
 import { QuickView } from "@/widgets/QuickView";
 
 const options = [
@@ -26,7 +27,10 @@ const options = [
   },
 ];
 
-export const ProductButtonGroup = () => {
+interface ProductButtonGroupProps {
+  product: Product;
+}
+export const ProductButtonGroup = ({ product }: ProductButtonGroupProps) => {
   const iconColor = useColorModeValue("gray.600", "gray.400");
   const [isOpenQuick, setIsOpenQuick] = useState(false);
 
@@ -58,7 +62,9 @@ export const ProductButtonGroup = () => {
           </Tooltip>
         ))}
       </ButtonGroup>
-      {isOpenQuick && <QuickView setIsOpenQuick={onOpenQuick} />}
+      {isOpenQuick && (
+        <QuickView setIsOpenQuick={onOpenQuick} product={product} />
+      )}
     </>
   );
 };

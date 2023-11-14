@@ -1,8 +1,10 @@
+"use client";
 import {
   FormControl,
   FormControlProps,
   FormLabel,
   HStack,
+  Text,
   useRadioGroup,
   UseRadioGroupProps,
 } from "@chakra-ui/react";
@@ -40,7 +42,7 @@ export const ColorPicker = (props: ColorPickerProps) => {
     <FormControl {...rootProps}>
       {!hideLabel && (
         <FormLabel fontSize="sm" fontWeight="medium">
-          {label ?? `Color: ${selectedOption?.label ?? options[0].label}`}
+          {`Color: ${selectedOption?.label || label || options[0].label}`}
         </FormLabel>
       )}
       <HStack {...getRootProps()}>
@@ -48,7 +50,7 @@ export const ColorPicker = (props: ColorPickerProps) => {
           <ColorPickerOption
             key={idx}
             label={label}
-            color={option.color}
+            color={option.label}
             colordata={option.colorData || ""}
             {...getRadioProps({ value: option.colorData })}
           />

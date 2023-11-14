@@ -14,8 +14,10 @@ export interface Product {
   discount?: number;
   category: any;
   currency: string;
+  quantity: number;
   images: any;
   tags?: Tag[];
   rating: number;
   detailsButton: ButtonLink;
+  options: any;
 }

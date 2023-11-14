@@ -46,11 +46,12 @@ export const Navbar = memo((props: NavbarProps) => {
   return (
     <MotionBox
       as="header"
-      background={{
+      css={{ backdropFilter: "blur(10px)" }}
+      bg={{
         base: themeBg,
         md: isMainPage ? "transparent" : themeBg,
       }}
-      position={"absolute"}
+      position={"fixed"}
       zIndex={"var(--chakra-zIndices-navbar)"}
       width="100%"
       {...animationNavbar}
