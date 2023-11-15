@@ -10,6 +10,8 @@ import {
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 
+import { useConstructorStore } from "@/global/store/cart";
+
 import { ColorPickerOption } from "./ColorPickerOption";
 
 interface ColorPickerProps extends UseRadioGroupProps {
@@ -32,11 +34,18 @@ export const ColorPicker = (props: ColorPickerProps) => {
   const { getRadioProps, getRootProps, value, setValue } = useRadioGroup(rest);
   const selectedOption = options?.find((option) => option.colorData === value);
 
+  const onSetColor = useConstructorStore((state) => state.setColorOption);
+
   useEffect(() => {
     if (value) {
-      setValue(value);
+      onSetColor(selectedOption || options[0]);
     }
-  }, [setValue, value]);
+  }, [onSetColor, options, selectedOption, value]);
+
+  useEffect(() => {
+    onSetColor(options[0]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <FormControl {...rootProps}>

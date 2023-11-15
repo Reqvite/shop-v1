@@ -1,3 +1,4 @@
+"use client";
 import {
   Center,
   Flex,
@@ -10,7 +11,10 @@ import {
   useControllableState,
   UseControllableStateProps,
 } from "@chakra-ui/react";
+import { useEffect } from "react";
 import { FiMinus, FiPlus } from "react-icons/fi";
+
+import { useConstructorStore } from "@/global/store/cart";
 
 interface QuantityPickerProps extends UseControllableStateProps<number> {
   max?: number;
@@ -19,12 +23,18 @@ interface QuantityPickerProps extends UseControllableStateProps<number> {
 }
 
 export const QuantityPicker = (props: QuantityPickerProps) => {
-  const { min = 0, max, rootProps, ...rest } = props;
+  const { min = 1, max, rootProps, ...rest } = props;
 
   const [value, setValue] = useControllableState(rest);
+  const onSetQuantity = useConstructorStore((state) => state.setQuantity);
   const handleDecrement = () => setValue(value === min ? value : value - 1);
   const handleIncrement = () => setValue(value === max ? value : value + 1);
 
+  useEffect(() => {
+    if (value) {
+      onSetQuantity(value);
+    }
+  }, [onSetQuantity, value]);
   return (
     <FormControl {...rootProps}>
       <FormLabel fontSize="sm" fontWeight="medium">

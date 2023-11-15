@@ -1,3 +1,4 @@
+"use client";
 import {
   Box,
   Button,
@@ -12,9 +13,9 @@ import {
 } from "@chakra-ui/react";
 import { usePathname } from "next/navigation";
 import { FiClock, FiHeart } from "react-icons/fi";
-import { RiRulerLine } from "react-icons/ri";
 
 import { getStrapiMedia } from "@/shared/api/api-helpers";
+import { useAddProduct } from "@/shared/lib/hooks/useAddProduct";
 import { productRender } from "@/shared/lib/productRender";
 import { Product } from "@/shared/types/product";
 import {
@@ -36,6 +37,7 @@ export const ProductQuickShop = (props: ProductQuickShopProps) => {
     title,
     discount,
     currency,
+    tags,
     price,
     rating,
     images,
@@ -46,6 +48,7 @@ export const ProductQuickShop = (props: ProductQuickShopProps) => {
   } = product;
 
   const pathname = usePathname();
+  const { onAddProductToCart } = useAddProduct();
 
   const mapImages = images.data.map((el: any, idx: number) => {
     return {
@@ -59,6 +62,10 @@ export const ProductQuickShop = (props: ProductQuickShopProps) => {
     productRender(section, index),
   );
 
+  const onAddProduct = () => {
+    onAddProductToCart(product);
+  };
+
   return (
     <Stack
       direction={{ base: "column", xl: "row" }}
@@ -71,11 +78,16 @@ export const ProductQuickShop = (props: ProductQuickShopProps) => {
       <Box flex="1">
         <Stack spacing={{ base: "4", md: "8" }}>
           <Stack spacing={{ base: "2", md: "4" }}>
-            <Stack spacing="3">
-              <ProductBadge bg="red.500" color="white">
-                On Sale
-              </ProductBadge>
-            </Stack>
+            {tags && (
+              <Stack spacing="3">
+                {tags.map(({ id, name, color }) => (
+                  <ProductBadge key={id} bg={`${color}.500`} color="white">
+                    {name}
+                  </ProductBadge>
+                ))}
+              </Stack>
+            )}
+
             <Heading size="lg" fontWeight="medium">
               {title}
             </Heading>
@@ -128,7 +140,7 @@ export const ProductQuickShop = (props: ProductQuickShopProps) => {
             justify="space-evenly"
           >
             <Box flex="1">
-              <QuantityPicker defaultValue={1} max={5} />
+              <QuantityPicker defaultValue={1} max={quantity} />
             </Box>
             <Box flex="1">
               <Button
@@ -143,7 +155,7 @@ export const ProductQuickShop = (props: ProductQuickShopProps) => {
             </Box>
           </HStack>
           <Stack spacing="3">
-            <Button variant="primary" size="lg">
+            <Button variant="primary" size="lg" onClick={onAddProduct}>
               Add to cart
             </Button>
             <Link textAlign="center" href={`${pathname}/${slug}`}>

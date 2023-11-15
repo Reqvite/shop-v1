@@ -3,6 +3,7 @@ import { ButtonLink } from "./components";
 interface Tag {
   name: string;
   color: string;
+  id: number;
 }
 
 export interface Product {

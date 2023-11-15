@@ -1,3 +1,4 @@
+"use client";
 import {
   FormControl,
   FormControlProps,
@@ -10,7 +11,10 @@ import {
   useRadioGroup,
   UseRadioGroupProps,
 } from "@chakra-ui/react";
+import { useEffect } from "react";
 import { RiRulerLine } from "react-icons/ri";
+
+import { useConstructorStore } from "@/global/store/cart";
 
 import { SizePickerButton } from "./SizePickerButton";
 
@@ -30,6 +34,18 @@ export const SizePicker = (props: SizePickerProps) => {
   const { options, rootProps, hideLabel, label, ...rest } = props;
   const { getRadioProps, getRootProps, value } = useRadioGroup(rest);
   const selectedOption = options.find((option) => option.value == value);
+  const onSetSize = useConstructorStore((state) => state.setSizeOption);
+
+  useEffect(() => {
+    if (value) {
+      onSetSize(selectedOption || options[0]);
+    }
+  }, [onSetSize, options, selectedOption, value]);
+
+  useEffect(() => {
+    onSetSize(options[0]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <FormControl {...rootProps}>
@@ -38,7 +54,7 @@ export const SizePicker = (props: SizePickerProps) => {
           {`Size: ${selectedOption?.label || label || options[0].label}`}
         </FormLabel>
       )}
-      <Stack flex="1">
+      <Stack>
         <HStack {...getRootProps()}>
           {options.map((option) => (
             <SizePickerButton
